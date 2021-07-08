@@ -1,0 +1,4 @@
+<p>{{ content }}</p>
+<textarea *ngIf="content == 'Empty'" [(ngModel)]="texto"></textarea>
+<!-- <input [(ngModel)]="texto" /> -->
+<button (click)="addPost()">Guardar</button>
