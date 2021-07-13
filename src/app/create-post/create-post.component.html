@@ -1,4 +1,46 @@
-<p>{{ content }}</p>
-<textarea *ngIf="content == 'Empty'" [(ngModel)]="texto"></textarea>
-<!-- <input [(ngModel)]="texto" /> -->
-<button (click)="addPost()">Guardar</button>
+<p *ngFor="let item of content">{{ item }}</p>
+
+<form (submit)="addPost(postForm)" #postForm="ngForm">
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      name="title"
+      ngModel
+      title="ngModel"
+      placeholder="Title"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      name="summary"
+      ngModel
+      summary="ngModel"
+      placeholder="Summary"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <textarea
+      matInput
+      name="content"
+      ngModel
+      content="ngModel"
+      placeholder="Description"
+    ></textarea>
+  </mat-form-field>
+  <button>Guardar</button>
+</form>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let post of posts">
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ post.title }} </mat-panel-title>
+      <mat-panel-description>
+        {{ post.summary }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{ post.content }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
