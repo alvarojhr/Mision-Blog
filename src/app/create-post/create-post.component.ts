@@ -21,7 +21,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   addPost(form:NgForm):void{
-    this.content.push(this.texto);
+    this.posts.push(form.value);
   }
-
 }
