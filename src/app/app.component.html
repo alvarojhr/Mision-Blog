@@ -1,2 +1,5 @@
-<h1>We are learning Angular</h1>
-<app-create-post></app-create-post>
+<app-header></app-header>
+<main>
+  <app-create-post (postCreated)="onPostAdded($event)"></app-create-post>
+  <app-post-list [posts]="storedPosts"></app-post-list>
+</main>
