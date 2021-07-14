@@ -1,15 +1,15 @@
-<p *ngFor="let item of content">{{ item }}</p>
-
-<form (submit)="addPost(postForm)" #postForm="ngForm">
+<form (submit)="onAddPost(postForm)" #postForm="ngForm">
   <mat-form-field>
     <input
       matInput
       type="text"
       name="title"
       ngModel
+      required
       title="ngModel"
       placeholder="Title"
     />
+    <!-- <mat-error *ngIf="title.invalid">Campo invalido</mat-error> -->
   </mat-form-field>
   <mat-form-field>
     <input
@@ -28,19 +28,8 @@
       ngModel
       content="ngModel"
       placeholder="Description"
+      required
     ></textarea>
   </mat-form-field>
-  <button type="submit">Guardar</button>
+  <button mat-raised-button color="primary" type="submit">Guardar</button>
 </form>
-
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let post of posts">
-    <mat-expansion-panel-header>
-      <mat-panel-title> {{ post.title }} </mat-panel-title>
-      <mat-panel-description>
-        {{ post.summary }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>{{ post.content }}</p>
-  </mat-expansion-panel>
-</mat-accordion>
