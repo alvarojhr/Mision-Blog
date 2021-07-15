@@ -6,10 +6,10 @@
       name="title"
       ngModel
       required
-      title="ngModel"
+      #title="ngModel"
       placeholder="Title"
     />
-    <!-- <mat-error *ngIf="title.invalid">Campo invalido</mat-error> -->
+    <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input
@@ -26,10 +26,11 @@
       matInput
       name="content"
       ngModel
-      content="ngModel"
+      #content="ngModel"
       placeholder="Description"
       required
     ></textarea>
+    <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
   </mat-form-field>
   <button mat-raised-button color="primary" type="submit">Guardar</button>
 </form>
