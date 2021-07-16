@@ -7,11 +7,7 @@ import { Post } from './models/post.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  storedPosts:Post[] = [];
 
   title = 'Mision-Blog';
 
-  onPostAdded(post: Post){
-    this.storedPosts.push(post);
-  }
 }
