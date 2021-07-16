@@ -11,8 +11,6 @@ import { Post } from '../../models/post.model';
 
 export class CreatePostComponent implements OnInit {
 
-  postExample:Post = {title: "Primer post",summary:"Este es el primer post",content:"Este es el contenido del post"};
-
   constructor(public postService: PostService) { }
 
   ngOnInit(): void {

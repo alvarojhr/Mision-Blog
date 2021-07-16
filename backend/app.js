@@ -1,41 +1,51 @@
 const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+
+const Post = require("./models/post");
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Header",
-    "Origin, X-Requested-With, Content-type, Accept"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-  );
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
-  next();
-});
+mongoose
+  .connect(
+    "mongodb+srv://admin:f7ZJm6pFO7fdbXAz@cluster0.54mkd.mongodb.net/MisionBlog?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    console.log("Estamos a conectados a nuestra BD");
+  })
+  .catch(() => {
+    console.log("Houston tenemos un problema");
+  });
 
 app.get("/api/posts", (req, res) => {
-  const posts = [
-    {
-      title: "Primer post",
-      summary: "Este es un post",
-      content: "Nuestro primer post desde el servidor",
-    },
-    {
-      title: "Segundo post",
-      summary: "Este es un post",
-      content: "FELICITACIONES",
-    },
-  ];
-  res.status(200).json(posts);
+  Post.find().then((postResult) => {
+    res.status(200).json(postResult);
+  });
 });
 
 app.post("/api/posts", (req, res) => {
   console.log(req.body);
-  res.status(201).json({
-    message: "Post agregado",
+  const postForAdd = new Post({
+    title: req.body.title,
+    summary: req.body.summary,
+    content: req.body.content,
+  });
+  postForAdd.save().then((createdPost) => {
+    res.status(201).json({
+      idPostAdded: createdPost._id,
+    });
+  });
+});
+
+app.delete("/api/posts/:id", (req, res) => {
+  Post.deleteOne({ _id: req.params.id }).then((result) => {
+    console.log(result);
+    res.status(200).json({ message: "Post eliminado" });
   });
 });
 
