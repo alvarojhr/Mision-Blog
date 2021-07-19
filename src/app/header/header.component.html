@@ -1,1 +1,11 @@
-<mat-toolbar color="primary"> MisionBlog </mat-toolbar>
+<mat-toolbar color="primary">
+  <span>
+    <a routerLink="/">MisionBlog</a>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a mat-button routerLink="/add" routerLinkActive="mat-accent">New Post</a>
+    </li>
+  </ul>
+</mat-toolbar>
