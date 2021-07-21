@@ -1,36 +1,38 @@
-<form (submit)="onSavePost(postForm)" #postForm="ngForm">
-  <mat-form-field>
-    <input
-      matInput
-      type="text"
-      name="title"
-      [ngModel]="post.title"
-      required
-      #title="ngModel"
-      placeholder="Title"
-    />
-    <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input
-      matInput
-      type="text"
-      name="summary"
-      [ngModel]="post.summary"
-      summary="ngModel"
-      placeholder="Summary"
-    />
-  </mat-form-field>
-  <mat-form-field>
-    <textarea
-      matInput
-      name="content"
-      [ngModel]="post.content"
-      #content="ngModel"
-      placeholder="Description"
-      required
-    ></textarea>
-    <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
-  </mat-form-field>
-  <button mat-raised-button color="primary" type="submit">Guardar</button>
-</form>
+<mat-card>
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="title"
+        [ngModel]="post.title"
+        required
+        #title="ngModel"
+        placeholder="Title"
+      />
+      <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="summary"
+        [ngModel]="post.summary"
+        summary="ngModel"
+        placeholder="Summary"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        name="content"
+        [ngModel]="post.content"
+        #content="ngModel"
+        placeholder="Description"
+        required
+      ></textarea>
+      <mat-error *ngIf="content.invalid">Campo invalido</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+  </form>
+</mat-card>
