@@ -7,7 +7,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{ post.content }}</p>
-    <mat-action-row>
+    <mat-action-row *ngIf="isAuth">
       <button
         mat-stroked-button
         color="primary"
