@@ -15,7 +15,7 @@ export class CreatePostComponent implements OnInit {
   post: Post;
 
   constructor(public postService: PostService, public route: ActivatedRoute) {
-    this.post = { id: '', title: '', summary: '', content: '' };
+    this.post = { id: '', title: '', summary: '', content: '', author: '' };
   }
 
   ngOnInit(): void {
@@ -29,6 +29,7 @@ export class CreatePostComponent implements OnInit {
             title: postData.title,
             summary: postData.summary,
             content: postData.content,
+            author: postData.author,
           };
         });
       } else {

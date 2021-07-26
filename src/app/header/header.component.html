@@ -5,6 +5,11 @@
   <span class="spacer"></span>
   <ul>
     <li *ngIf="isAuth">
+      <a mat-button routerLink="/profile" routerLinkActive="mat-accent">{{
+        userId
+      }}</a>
+    </li>
+    <li *ngIf="isAuth">
       <a mat-button routerLink="/add" routerLinkActive="mat-accent">New Post</a>
     </li>
     <li *ngIf="!isAuth">

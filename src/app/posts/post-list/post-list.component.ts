@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { PostService } from 'src/app/services/post/post.service';
@@ -14,6 +15,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   postsSub: Subscription;
   isAuth = false;
+  userId!: string;
   private authListenerSub!: Subscription;
 
   constructor(
@@ -29,6 +31,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postService.getPosts();
+    this.userId = this.authService.getUserId();
     this.postsSub = this.postService
       .getPostsUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -39,6 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
         this.isAuth = isAuthenticated;
+        this.userId = this.authService.getUserId();
       });
   }
 

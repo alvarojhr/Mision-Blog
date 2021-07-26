@@ -46,7 +46,9 @@ router.post("/login", (req, res) => {
         "MisionTic2021_secret_for_MisionBlog",
         { expiresIn: "1h" }
       );
-      res.status(200).json({ token: token, expiresIn: 3600 });
+      res
+        .status(200)
+        .json({ token: token, expiresIn: 3600, userId: userGet._id });
     })
     .catch((err) => {
       return res.status(401).json({ message: "Autenticación fallida" });

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Post } from '../../models/post.model';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,12 +42,16 @@ export class PostService {
               title: string;
               summary: string;
               content: string;
+              author: string;
+              authorData: User;
             }) => {
               return {
                 id: post._id,
                 title: post.title,
                 summary: post.summary,
                 content: post.content,
+                author: post.author,
+                authorData: post.authorData,
               };
             }
           );
@@ -64,6 +69,7 @@ export class PostService {
       title: string;
       summary: string;
       content: string;
+      author: string;
     }>(this.url + '/' + id);
   }
 

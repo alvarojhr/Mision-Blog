@@ -1,5 +1,6 @@
 const express = require("express");
 const Post = require("../models/post");
+const User = require("../models/user");
 
 const router = express.Router();
 
@@ -7,7 +8,11 @@ const checkAuth = require("../middleware/check-auth");
 
 router.get("", (req, res) => {
   Post.find().then((postResult) => {
-    res.status(200).json(postResult);
+    User.findById(postResult.author).then((user) => {
+      postResult["authorPost"] = user;
+      console.log(user);
+      res.status(200).json(postResult);
+    });
   });
 });
 
@@ -26,6 +31,7 @@ router.post("", checkAuth, (req, res) => {
     title: req.body.title,
     summary: req.body.summary,
     content: req.body.content,
+    author: req.userData.userId,
   });
   postForAdd.save().then((createdPost) => {
     res.status(201).json({
@@ -35,22 +41,35 @@ router.post("", checkAuth, (req, res) => {
 });
 
 router.delete("/:id", checkAuth, (req, res) => {
-  Post.deleteOne({ _id: req.params.id }).then((result) => {
-    res.status(200).json({ message: "Post eliminado" });
-  });
+  Post.deleteOne({ _id: req.params.id, author: req.userData.userId }).then(
+    (result) => {
+      if (result.n > 0) {
+        res.status(200).json({ message: "Post eliminado" });
+      } else {
+        res.status(401).json({ message: "Autenticación fallida" });
+      }
+    }
+  );
 });
 
 router.put("/:id", checkAuth, (req, res) => {
-  console.log(req.params.id);
   const post = new Post({
     _id: req.params.id,
     title: req.body.title,
     summary: req.body.summary,
     content: req.body.content,
+    author: req.userData.userId,
   });
-  Post.updateOne({ _id: req.params.id }, post).then((result) => {
+  Post.updateOne(
+    { _id: req.params.id, author: req.userData.userId },
+    post
+  ).then((result) => {
     console.log(result);
-    res.status(200).json({ message: "Actualizacion ejecutada" });
+    if (result.nModified > 0) {
+      res.status(200).json({ message: "Actualizacion ejecutada" });
+    } else {
+      res.status(401).json({ message: "Autenticación fallida" });
+    }
   });
 });
 
