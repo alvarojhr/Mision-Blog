@@ -18,7 +18,14 @@ export class CreatePostComponent implements OnInit {
   imagePreview!: string;
 
   constructor(public postService: PostService, public route: ActivatedRoute) {
-    this.post = { id: '', title: '', summary: '', content: '', author: '' };
+    this.post = {
+      id: '',
+      title: '',
+      summary: '',
+      content: '',
+      imageUrl: '',
+      author: '',
+    };
   }
 
   ngOnInit(): void {
@@ -32,6 +39,7 @@ export class CreatePostComponent implements OnInit {
       }),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      //Form en modo de edicion
       if (paramMap.has('postId')) {
         this.isEditing = true;
         this.postId = paramMap.get('postId')!;
@@ -41,10 +49,20 @@ export class CreatePostComponent implements OnInit {
             title: postData.title,
             summary: postData.summary,
             content: postData.content,
+            imageUrl: postData.imageUrl,
             author: postData.author,
           };
+          this.form.setValue({
+            title: this.post.title,
+            summary: this.post.summary,
+            content: this.post.content,
+            image: this.post.imageUrl,
+          });
+          this.imagePreview = this.post.imageUrl;
         });
-      } else {
+      }
+      //Form en modo creacion
+      else {
         this.isEditing = false;
         this.postId = null!;
       }
@@ -52,19 +70,26 @@ export class CreatePostComponent implements OnInit {
   }
 
   onSavePost(): void {
+    console.log(this.form.value.image);
     if (this.form.invalid) {
       return;
     }
-
+    //Guardando en modo editar
     if (this.isEditing) {
-      this.postService.updatePost(this.form.value, this.postId);
-    } else {
-      console.log(this.form.value);
+      this.postService.updatePost(
+        this.form.value,
+        this.postId,
+        this.form.value.image
+      );
+    }
+    //Guardando en modo creacion
+    else {
       const postInfo: Post = {
         id: this.form.value.id,
         title: this.form.value.title,
         summary: this.form.value.summary,
         content: this.form.value.content,
+        imageUrl: '',
         author: '',
       };
       this.postService.addPost(postInfo, this.form.value.image);

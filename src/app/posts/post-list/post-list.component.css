@@ -2,3 +2,12 @@
   display: block;
   margin-top: 1rem;
 }
+
+.post-image {
+  margin: auto;
+  width: 40%;
+}
+
+.post-image img {
+  width: 100%;
+}

@@ -14,7 +14,6 @@ const MIME_TYPES = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(file);
     const isValid = MIME_TYPES[file.mimetype];
     let error = new Error("El tipo de archivo no es valido");
     if (isValid) {
@@ -59,8 +58,12 @@ router.post(
       author: req.userData.userId,
     });
     postForAdd.save().then((createdPost) => {
+      console.log("Agregado de manera exitosa!");
       res.status(201).json({
-        idPostAdded: createdPost._id,
+        post: {
+          ...postForAdd,
+          id: createdPost._id,
+        },
       });
     });
   }
@@ -78,25 +81,39 @@ router.delete("/:id", checkAuth, (req, res) => {
   );
 });
 
-router.put("/:id", checkAuth, (req, res) => {
-  const post = new Post({
-    _id: req.params.id,
-    title: req.body.title,
-    summary: req.body.summary,
-    content: req.body.content,
-    author: req.userData.userId,
-  });
-  Post.updateOne(
-    { _id: req.params.id, author: req.userData.userId },
-    post
-  ).then((result) => {
-    console.log(result);
-    if (result.nModified > 0) {
-      res.status(200).json({ message: "Actualizacion ejecutada" });
+router.put(
+  "/:id",
+  checkAuth,
+  multer({ storage: storage }).single("image"),
+  (req, res) => {
+    let image = "";
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+      image = url + "/files/" + req.file.filename;
     } else {
-      res.status(401).json({ message: "Autenticación fallida" });
+      image = req.body.imageUrl;
     }
-  });
-});
+
+    const post = new Post({
+      _id: req.params.id,
+      title: req.body.title,
+      summary: req.body.summary,
+      content: req.body.content,
+      imageUrl: image,
+      author: req.userData.userId,
+    });
+    Post.updateOne(
+      { _id: req.params.id, author: req.userData.userId },
+      post
+    ).then((result) => {
+      console.log(result);
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Actualizacion ejecutada" });
+      } else {
+        res.status(401).json({ message: "Autenticación fallida" });
+      }
+    });
+  }
+);
 
 module.exports = router;
