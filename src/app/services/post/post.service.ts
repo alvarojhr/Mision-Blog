@@ -19,9 +19,14 @@ export class PostService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  addPost(post: Post) {
+  addPost(post: Post, image: File) {
+    const postData = new FormData();
+    postData.append('title', post.title);
+    postData.append('summary', post.summary);
+    postData.append('content', post.content);
+    postData.append('image', image, post.title);
     this.http
-      .post<{ idPostAdded: string }>(this.url, post)
+      .post<{ idPostAdded: string }>(this.url, postData)
       .subscribe((response) => {
         console.log(response);
         post.id = response.idPostAdded;
@@ -43,7 +48,6 @@ export class PostService {
               summary: string;
               content: string;
               author: string;
-              authorData: User;
             }) => {
               return {
                 id: post._id,
@@ -51,7 +55,6 @@ export class PostService {
                 summary: post.summary,
                 content: post.content,
                 author: post.author,
-                authorData: post.authorData,
               };
             }
           );

@@ -1,37 +1,33 @@
 <mat-card>
-  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+  <form [formGroup]="form" (submit)="onSavePost()">
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        name="title"
-        [ngModel]="post.title"
-        required
-        #title="ngModel"
-        placeholder="Title"
-      />
-      <mat-error *ngIf="title.invalid">Campo invalido</mat-error>
+      <input matInput type="text" placeholder="Title" formControlName="title" />
+      <mat-error *ngIf="form.get('title')!.invalid">Campo invalido</mat-error>
     </mat-form-field>
+    <div>
+      <button mat-stroked-button type="button" (click)="fileSelect.click()">
+        Seleccionar imagen
+      </button>
+      <input type="file" #fileSelect (change)="onImageSelected($event)" />
+      <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+        <img [src]="imagePreview" [alt]="form.value.title" />
+      </div>
+    </div>
     <mat-form-field>
       <input
         matInput
         type="text"
-        name="summary"
-        [ngModel]="post.summary"
-        summary="ngModel"
         placeholder="Summary"
+        formControlName="summary"
       />
     </mat-form-field>
     <mat-form-field>
       <textarea
         matInput
-        name="content"
-        [ngModel]="post.content"
-        #content="ngModel"
         placeholder="Description"
-        required
+        formControlName="content"
       ></textarea>
-      <mat-error *ngIf="content.invalid">Campo invalido</mat-error>
+      <mat-error *ngIf="contentIsValid()">Campo invalido</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Guardar</button>
   </form>
