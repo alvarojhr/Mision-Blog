@@ -11,7 +11,7 @@ import { PostService } from '../post/post.service';
 })
 export class AuthService {
   private token: string;
-  url = 'http://localhost:3000/api/user';
+  url = 'http://localhost:3000/api/auth';
   private isAuthenticated = false;
   private authStatusListener = new Subject<boolean>();
   private userId!: string;

@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const postRoutes = require("./routes/posts");
+const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 
 const app = express();
@@ -26,6 +27,7 @@ mongoose
   });
 
 app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 
 module.exports = app;

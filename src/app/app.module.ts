@@ -16,11 +16,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { ListUsersComponent } from './admin/user/list-users/list-users.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     PostListComponent,
     LoginComponent,
     SignupComponent,
+    ListUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatTableModule,
     HttpClientModule,
   ],
   providers: [

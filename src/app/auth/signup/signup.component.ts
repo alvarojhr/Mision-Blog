@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
   user: User;
 
   constructor(public authService: AuthService) {
-    this.user = { name: '', email: '', password: '' };
+    this.user = { id: '', name: '', email: '', password: '' };
   }
 
   ngOnInit(): void {}

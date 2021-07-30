@@ -5,6 +5,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ListUsersComponent } from './admin/user/list-users/list-users.component';
 
 const routes: Routes = [
   { path: '', component: PostListComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'admin/users', component: ListUsersComponent },
 ];
 
 @NgModule({

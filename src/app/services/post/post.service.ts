@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Post } from '../../models/post.model';
-import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
